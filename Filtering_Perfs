@@ -1,19 +1,21 @@
-# Perfs are what we use to measure the performance of individual cameras using GStreamer.
-# Previously, we would get multiple lines of output that looked liked: GPU [1] PERF: [18663@0] 2.00  |  [18665@1] 2.00  |  [18667@2] 2.00  |  [18669@3] 2.00  |  [18671@4] 2.00  |  [18673@5] 2.00  |  [18676@6] 2.00  |  [18678@7] 2.00  |  [18680@8] 2.00  |  [18682@9] 2.00  |  [18684@10] 1.00  |  [18686@11] 2.00  |  [18688@12] 2.00  |  [18690@13] 2.00  |  [18692@14] 2.00  |  [18694@15] 2.00  |  [18697@16] 2.00  |  [18700@17] 0.00  |  [18703@18] 0.00  |  [18706@19] 2.00  |  [18709@20] 2.00  |  [18712@21] 2.00  |  [18719@22] 2.00  |  [18722@23] 2.00  |  [18725@24] 2.00  |  [18729@25] 2.00  |  [18732@26] 2.00  |  [18735@27] 2.00  |  [18738@28] 1.67 
-# A positive match would be indicated by @-.
-# With no automation, the cyber analysts were becoming losing patience and motivation when there are about 100 line of entries to look at for the @- patterns to indicate a down camera.
-# This initial script required setup and a ton of extra work. This was my starting point.
+# 1.0
+Perfs are what we use to measure the performance of individual cameras using GStreamer.
+Previously, we would get multiple lines of output that looked liked: GPU [1] PERF: [18663@0] 2.00  |  [18665@1] 2.00  |  [18667@2] 2.00  |  [18669@3] 2.00  |  [18671@4] 2.00  |  [18673@5] 2.00  |  [18676@6] 2.00  |  [18678@7] 2.00  |  [18680@8] 2.00  |  [18682@9] 2.00  |  [18684@10] 1.00  |  [18686@11] 2.00  |  [18688@12] 2.00  |  [18690@13] 2.00  |  [18692@14] 2.00  |  [18694@15] 2.00  |  [18697@16] 2.00  |  [18700@17] 0.00  |  [18703@18] 0.00  |  [18706@19] 2.00  |  [18709@20] 2.00  |  [18712@21] 2.00  |  [18719@22] 2.00  |  [18722@23] 2.00  |  [18725@24] 2.00  |  [18729@25] 2.00  |  [18732@26] 2.00  |  [18735@27] 2.00  |  [18738@28] 1.67 
+A positive match would be indicated by @-.
+With no automation, the cyber analysts were becoming losing patience and motivation when there are about 100 line of entries to look at for the @- patterns to indicate a down camera.
+This initial script required setup and a ton of extra work. This was my starting point.
 
 #SETUP - 1 TIME ONLY
-#1s. On the Microsoft store, download and install Python 3.10 or any version above that.
-# Note - You can also download python directly from python.org
-# 2s Create a perfs.txt file on your Desktop
-# 3s. Open Visual Studio Code.
-# 4s. On the top left, click on the three horizontal lines and click  File --> New Text File...
-# 5s. Click on Select a language and click on Python
-# At this point you may be prompted to install python interpreter, download the interpreter
-# 6s. Copy all of the following code and paste it into the Visual Studio Code file you opened in step 3s-4s
+1s. On the Microsoft store, download and install Python 3.10 or any version above that.
+ Note - You can also download python directly from python.org
+2s Create a perfs.txt file on your Desktop
+3s. Open Visual Studio Code.
+4s. On the top left, click on the three horizontal lines and click  File --> New Text File...
+5s. Click on Select a language and click on Python
+At this point you may be prompted to install python interpreter, download the interpreter
+6s. Copy all of the following code and paste it into the Visual Studio Code file you opened in step 3s-4s
 
+```
 import re
 import subprocess
 log_file_path = "/log/file/path"
@@ -31,25 +33,26 @@ output_file_path = "C:\\log\\file\\path\\perfs_filtered_output.txt"
 with open(output_file_path, "w") as output_file:
     output_file.write(output_string.replace(" ", ""))
 subprocess.Popen(['start', '', output_file_path], shell=True)
+```
 
-# 7s. change log_file_path = to match where you created your perfs.txt file in step 2s.
-# In order to find the path, right click on the perfs.txt file you made in step 2s, click Properties and find Location.
-# Wherever you find a "\" in the log_path_pile, make sure you place another \.
-# ex: C:/log/file/path perfs.txt  --> C:\\log\\file\\path\\perfs.txt
-# 8s. change the file path output_file_path =to your Desktop where your perfs.txt file is located at and change the file name to filtered_output.txt
-# The same rules apply to the file path as in step 4s.b
-# 9s. Save the Visual Studio Code (VSC) as "filter_perfs.py"
-# HOW TO RUN SCRIPT
-# 1r. Log in to Bomgar and pull perfs from a server
-# 2r. Highlight perfs and then press CRTL + C to copy the highlighted area.
-# You may copy duplicates as this script will also filter out all duplicate entries.
-# 3r. Paste the copied perfs into your perfs.txt file
-# 4r. Save the perfs.txt file with all of the pasted perfs.
-# 5r. Double click on filter_perfs.py
-# 6r.  The script will automatically open up the filtered_output.txt file with the filtered perfs.
-# 7r. Repeat at steps 1r - 3r with new client perfs.
+7s. change log_file_path = to match where you created your perfs.txt file in step 2s.
+In order to find the path, right click on the perfs.txt file you made in step 2s, click Properties and find Location.
+Wherever you find a "\" in the log_path_pile, make sure you place another \.
+ex: C:/log/file/path perfs.txt  --> C:\\log\\file\\path\\perfs.txt
+8s. change the file path output_file_path =to your Desktop where your perfs.txt file is located at and change the file name to filtered_output.txt
+The same rules apply to the file path as in step 4s.b
+9s. Save the Visual Studio Code (VSC) as "filter_perfs.py"
+HOW TO RUN SCRIPT
+1r. Log in to Bomgar and pull perfs from a server
+2r. Highlight perfs and then press CRTL + C to copy the highlighted area.
+You may copy duplicates as this script will also filter out all duplicate entries.
+3r. Paste the copied perfs into your perfs.txt file
+4r. Save the perfs.txt file with all of the pasted perfs.
+5r. Double click on filter_perfs.py
+6r.  The script will automatically open up the filtered_output.txt file with the filtered perfs.
+7r. Repeat at steps 1r - 3r with new client perfs.
 
-# Complete overhaul
+# Complete overhaul - 2.0
 The setup and use of the script was too difficult for entry-level analysts to use efficiently. The requirement for a more convenient tool was necessary and the following script was an evolution of the previous script. This time, we took advantage of Tkinter to develop a GUI that entry-level analysts can be more effective with.
 
 
@@ -112,3 +115,35 @@ if __name__ == "__main__":
     main()
 ```
 
+# 2.1 Minor Changes
+
+```
+import tkinter as tk
+from tkinter import scrolledtext
+import re
+​
+def process_log():
+    log_data = input_text.get("1.0", tk.END)
+    pattern = r'\[(\d+)@-?\]'
+    numbers_in_brackets = re.findall(pattern, log_data)
+    sorted_unique_numbers = sorted(set(numbers_in_brackets), key=int)
+    formatted_numbers = " ".join([f"[{number}]" for number in sorted_unique_numbers])
+    output_string = f"Number of matches: {len(sorted_unique_numbers)}\n{formatted_numbers}"
+    output_text.delete("1.0", tk.END)
+    output_text.insert(tk.END, output_string)
+    input_text.delete("1.0", tk.END)  # Clear the text in the input box
+​
+root = tk.Tk()
+root.title("Log Data Parser")
+​
+input_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=50, height=10)
+input_text.grid(row=0, column=0, padx=10, pady=10)
+​
+parse_button = tk.Button(root, text="Parse", command=process_log)
+parse_button.grid(row=1, column=0, padx=10, pady=10)
+​
+output_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=50, height=10)
+output_text.grid(row=0, column=1, padx=10, pady=10)
+​
+root.mainloop()
+```
