@@ -10,10 +10,15 @@ With no automation, the cyber analysts were becoming fatigued losing patience an
 
 # Imported packages
 import re
+
 import argparse
+
 import sys
+
 import tkinter as tk
+
 from tkinter import scrolledtext
+
 import subprocess
 
 # Package required in order to bring up the GUI.
