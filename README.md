@@ -8,6 +8,7 @@ A positive match would be indicated by @- : [18663@-] 0.00
 
 With no automation, the cyber analysts were becoming fatigued losing patience and motivation when there are 100's of line of entries to look at for the @- patterns to indicate a down camera.
 
+# Imported packages
 import re
 import argparse
 import sys
